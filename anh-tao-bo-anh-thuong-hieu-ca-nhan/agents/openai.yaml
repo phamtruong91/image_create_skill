@@ -1,0 +1,14 @@
+interface:
+  display_name: Tạo bộ ảnh thương hiệu cá nhân 5 bối cảnh
+  short_description: Tạo năm ảnh cùng khuôn mặt trong năm bối cảnh
+  default_prompt: 'Tải ảnh khuôn mặt của tôi và tạo đủ 5 concept: đi ngoài trời, trong
+    ô tô, phòng thu podcast, bàn làm việc có mic và đi lại trong nhà.'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
