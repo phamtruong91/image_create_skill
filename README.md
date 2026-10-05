@@ -46,6 +46,66 @@ Cùng một nhân vật xuất hiện trong năm không gian khác nhau. Trang p
 2. **Tải ảnh nhận diện:** chọn ảnh khuôn mặt rõ nét. Nếu ảnh có nhiều người, chỉ rõ nhân vật cần tạo.
 3. **Gửi yêu cầu:** gọi tên skill, chọn phong cách và để skill thực hiện đủ năm bối cảnh.
 
+## 🔀 Flowchart — Luồng tạo bộ ảnh
+
+Sơ đồ mô tả cách skill xử lý yêu cầu từ ảnh đầu vào đến bộ ảnh hoàn chỉnh. Mặc định tạo đủ năm cảnh; nếu bạn chỉ định phạm vi khác, thực hiện theo yêu cầu đó.
+
+```mermaid
+flowchart TD
+    A["Ảnh nhận diện và yêu cầu"] --> B{"Đã rõ nhân vật chính?"}
+    B -->|Chưa| C["Hỏi xác định nhân vật"]
+    C --> B
+    B -->|Rồi| D["Lập kế hoạch các cảnh"]
+    D --> E["Tạo từng ảnh từ ảnh gốc"]
+    E --> F{"Ảnh đạt yêu cầu?"}
+    F -->|Chưa| G["Chỉnh yêu cầu và tạo lại ảnh lỗi"]
+    G --> E
+    F -->|Đạt| H{"Đủ các cảnh đã yêu cầu?"}
+    H -->|Chưa| E
+    H -->|Đủ| I["Kiểm tra toàn bộ ảnh"]
+    I --> J{"Nhận diện và độ đa dạng đạt?"}
+    J -->|Chưa| G
+    J -->|Đạt| K["Trả ảnh riêng kèm nhãn cảnh"]
+```
+
+Nếu công cụ tạo ảnh lỗi, báo rõ phần còn thiếu; chỉ xác nhận hoàn tất khi đã có đủ ảnh.
+
+## 🛠️ Workflow — Các bước thực hiện
+
+**Workflow** là quy trình làm việc: mỗi bước xác định việc cần làm và kết quả cần có trước khi chuyển bước.
+
+| Bước | Việc thực hiện | Kết quả cần có |
+| --- | --- | --- |
+| **01 · Tiếp nhận** | Xem ảnh đầu vào; xác định nhân vật chính và các tùy chỉnh. | Ảnh nhận diện gốc và phạm vi rõ ràng. |
+| **02 · Lên concept** | Chọn bối cảnh, góc mặt, cỡ cảnh, tóc, trang phục và ánh sáng cho từng ảnh. | Kế hoạch các cảnh khác nhau; bộ mặc định có ít nhất ba hướng mặt. |
+| **03 · Viết yêu cầu tạo ảnh** | Mô tả từng cảnh, đặc điểm cần giữ, tư thế, đạo cụ và tỷ lệ ảnh. | Yêu cầu riêng cho mỗi cảnh, luôn kèm ảnh nhận diện gốc. |
+| **04 · Tạo từng ảnh** | Dùng công cụ tạo/chỉnh sửa ảnh theo kế hoạch. | Ảnh riêng cho từng bối cảnh. |
+| **05 · Kiểm tra và sửa** | Xem nhận diện, cơ thể, góc mặt, đạo cụ, hậu cảnh; tạo lại riêng ảnh lỗi từ ảnh gốc. | Ảnh đạt yêu cầu và toàn bộ ảnh có sự đa dạng. |
+| **06 · Bàn giao** | Trả đủ ảnh, gắn nhãn cảnh ngắn; báo phần thiếu nếu công cụ lỗi. | Bộ ảnh đúng phạm vi đã yêu cầu. |
+
+### ✅ Vòng kiểm tra chất lượng
+
+```mermaid
+flowchart TD
+    A["Ảnh vừa tạo"] --> B{"Đúng nhận diện và cảnh?"}
+    B -->|Chưa| R["Sửa mô tả, dùng lại ảnh gốc"]
+    B -->|Đúng| C{"Tư thế và đạo cụ đúng?"}
+    C -->|Chưa| R
+    C -->|Đúng| D{"Không có chữ hoặc logo lạ?"}
+    D -->|Chưa| R
+    D -->|Đạt| E["Giữ ảnh và kiểm tra cả bộ"]
+    R --> F["Tạo lại riêng ảnh lỗi"]
+    F --> A
+```
+
+| Cảnh | Điểm kiểm tra riêng |
+| --- | --- |
+| 🌿 Ngoài trời | Bước đi tự nhiên, tay chân hợp lý. |
+| 🚘 Ô tô | Mặt chính diện, mắt nhìn camera; ghế, dây an toàn, tay và vô lăng đúng vị trí. |
+| 🎙️ Phòng thu | Có không gian và thiết bị phòng thu chuyên dụng. |
+| 💻 Bàn làm việc | Micro gắn trên cần đỡ từ bên khung hình, hướng gần miệng. |
+| 🏡 Trong nhà | Có hành động bước đi trong nhà; bối cảnh và trang phục khác các cảnh còn lại. |
+
 ## 💬 Câu lệnh mẫu
 
 ### Tạo đủ năm cảnh mặc định
