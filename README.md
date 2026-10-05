@@ -1,3 +1,5 @@
+![Minh họa 5 bối cảnh thương hiệu cá nhân](docs/images/personal-branding-scenes.svg)
+
 <div align="center">
 
 # 📸 TẠO BỘ ẢNH THƯƠNG HIỆU CÁ NHÂN
